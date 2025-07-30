@@ -40,6 +40,9 @@ function App() {
       <button onClick={fetchTranscript}>Get Transcript</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {transcript && <textarea rows={45} value={transcript} readOnly />}
+      <button onClick={() => navigator.clipboard.writeText(transcript)}>
+        copy transcript
+      </button>
     </div>
   );
 }
