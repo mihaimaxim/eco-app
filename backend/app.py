@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from urllib.parse import urlparse, parse_qs
-from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled ,NoTranscriptFound
 
 app = Flask(__name__)
 CORS(app)
@@ -26,6 +26,10 @@ def transcript():
         transcript = YouTubeTranscriptApi().fetch(video_id, languages=['en'])
         text = " ".join([t.text.strip() for t in transcript])
         return jsonify({'transcript': text})
+    except TranscriptsDisabled:
+        return jsonify({'error': 'This video has captions disabled'}), 400
+    except NoTranscriptFound:
+        return jsonify({'error': 'No transcript found for this video'}), 400
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
