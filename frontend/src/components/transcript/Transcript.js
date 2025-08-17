@@ -30,7 +30,8 @@ function GlobalNews() {
 
   return (
     <section>
-      <h2>YouTube Transcript Generator</h2>
+      <p>pending</p>
+      {/* <h2>YouTube Transcript Generator</h2>
       <p>
         daca se poate... un copy paste la un youtube url, o sa arunce o eroare -
         si daca se poate... o solutie solida si gratis
@@ -50,7 +51,7 @@ function GlobalNews() {
         onClick={() => navigator.clipboard.writeText(transcript) && setUrl("")}
       >
         copy transcript
-      </button>
+      </button> */}
     </section>
   );
 }
