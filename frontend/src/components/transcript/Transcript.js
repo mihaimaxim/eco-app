@@ -9,11 +9,14 @@ function GlobalNews() {
     setTranscript("");
     setError("");
     try {
-      const res = await fetch("http://localhost:5000/transcript", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
-      });
+      const res = await fetch(
+        "https://eco-backend-qmv1.onrender.com/transcript",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url }),
+        }
+      );
       const data = await res.json();
       if (res.ok) {
         setTranscript(data.transcript);
