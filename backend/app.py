@@ -1,10 +1,46 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+import requests
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from urllib.parse import urlparse, parse_qs
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled ,NoTranscriptFound
 
+FRED_API_KEY=os.getenv("FRED_API_KEY")
+FRED_BASE="https://api.stlouisfed.org/fred/series/observations"
+
 app = Flask(__name__)
 CORS(app)
+
+def fetch_fred_series(series_id):
+    url = FRED_BASE
+    params = {
+        "api_key": FRED_API_KEY,
+        "series_id": series_id,
+        "file_type": "json",
+        "sort_order": "desc",
+        "limit": 1,
+    }
+    response = requests.get(url, params=params)
+    data = response.json()
+    obs = data["observations"][0]
+    return {
+        "value": obs["value"],
+        "date": obs["date"]
+    }
+    
+@app.route("/economy", methods=["GET"])
+def get_economy_data():
+    data = {
+        "unemployment_rate": fetch_fred_series("UNRATE"),
+        "nonfarm_payrolls": fetch_fred_series("PAYEMS"),
+        "gdp_growth_qoq": fetch_fred_series("A191RL1Q225SBEA")
+    }
+    return jsonify(data)
 
 def get_video_id(youtube_url):
     parsed = urlparse(youtube_url)

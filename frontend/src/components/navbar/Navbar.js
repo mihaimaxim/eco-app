@@ -17,8 +17,8 @@ function Navbar() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/labor" activeclassname="active">
-            Labor
+          <NavLink to="/economy" activeclassname="active">
+            Economy
           </NavLink>
         </li>
       </ul>

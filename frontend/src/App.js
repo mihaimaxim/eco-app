@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import GlobalNews from "./components/news/News";
 import TranscriptTool from "./components/transcript/Transcript";
-import LaborSection from "./components/labor/Labor";
 
 import "./App.css";
+import EconomySection from "./components/economy/Economy";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<GlobalNews />} />
           <Route path="/news" element={<GlobalNews />} />
           <Route path="/transcript" element={<TranscriptTool />} />
-          <Route path="/labor" element={<LaborSection />} />
+          <Route path="/economy" element={<EconomySection />} />
         </Routes>
       </main>
     </Router>
