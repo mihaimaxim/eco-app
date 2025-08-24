@@ -16,7 +16,7 @@ FRED_BASE="https://api.stlouisfed.org/fred/series/observations"
 app = Flask(__name__)
 CORS(app)
 
-def fetch_fred_series(series_id, limit=12):
+def fetch_fred_series(series_id, limit=300):
     url = FRED_BASE
     params = {
         "api_key": FRED_API_KEY,
@@ -45,6 +45,41 @@ def get_economy_data():
         "continuing_jobless_claims": fetch_fred_series("CCSA")
     }
     return jsonify(data)
+
+@app.route("/unemployment-trend",methods=["GET"])
+def unemployment_trend():
+    data = fetch_fred_series("UNRATE", limit=36)
+    return jsonify(data)
+
+@app.route("/nonfarm-payrolls", methods=["GET"])
+def nonfarm_payrolls_trend():
+    data = fetch_fred_series("PAYEMS", limit=72)
+    return jsonify(data)
+
+@app.route("/nonfarm-payrolls-change", methods=["GET"])
+def nonfarm_payrolls_change():
+    raw = fetch_fred_series("PAYEMS", limit=37)  # one extra for N-1 diffs
+    import pandas as pd
+
+    df = pd.DataFrame(raw)
+    df["date"]  = pd.to_datetime(df["date"], errors="coerce")
+    # convert strings like "159466" (or "159,466") to numbers
+    df["value"] = (
+        df["value"]
+        .astype(str)
+        .str.replace(",", "", regex=False)
+        .pipe(pd.to_numeric, errors="coerce")
+    )
+
+    df = df.sort_values("date").dropna(subset=["date", "value"])
+    df["change"] = df["value"].diff()
+
+    out = df[["date","change"]].dropna().tail(72)
+    return jsonify([
+        {"date": d.strftime("%Y-%m-%d"), "value": float(v)}
+        for d, v in zip(out["date"], out["change"])
+    ])
+
 
 @app.route("/continuing-claims-trend", methods=["GET"])
 def continuing_claims_trend():
