@@ -24,7 +24,8 @@ function EconomySection() {
 
   return (
     <section>
-      <h2>Current U.S. Economic Snapshot</h2>
+      <p>pending</p>
+      {/* <h2>Current U.S. Economic Snapshot</h2>
       <ul>
         {data.unemployment_rate && (
           <li>
@@ -65,7 +66,7 @@ function EconomySection() {
       <UnemploymentChart />
       <NonfarmPayrolls />
       <InitialJoblessClaimChart />
-      <ContinuingClaimsChart />
+      <ContinuingClaimsChart /> */}
     </section>
   );
 }

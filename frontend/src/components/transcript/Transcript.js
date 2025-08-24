@@ -36,13 +36,9 @@ function GlobalNews() {
 
   return (
     <section>
-      {/* <p>pending</p> */}
-      <h2>YouTube Transcript Generator</h2>
-      {/* <p>
-        daca se poate... un copy paste la un youtube url, o sa arunce o eroare -
-        si daca se poate... o solutie solida si gratis
-      </p> */}
-      <input
+      <p>pending</p>
+      {/* <h2>YouTube Transcript Generator</h2> */}
+      {/* <input
         type="text"
         placeholder="Paste YouTube URL"
         value={url}
@@ -57,7 +53,7 @@ function GlobalNews() {
         onClick={() => navigator.clipboard.writeText(transcript) && setUrl("")}
       >
         copy transcript
-      </button>
+      </button> */}
     </section>
   );
 }
