@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import ContinuingClaimsChart from "./continuing-jobless-claims/ContinuingJoblessClaims";
+
 function EconomySection() {
   const [data, setData] = useState(null);
 
@@ -21,20 +23,43 @@ function EconomySection() {
     <section>
       <h2>Current U.S. Economic Snapshot</h2>
       <ul>
-        <li>
-          <strong>Unemployment Rate:</strong> {data.unemployment_rate.value}%
-          (as of {data.unemployment_rate.date})
-        </li>
-        <li>
-          <strong>Nonfarm Payrolls:</strong>{" "}
-          {parseInt(data.nonfarm_payrolls.value).toLocaleString()} jobs (as of{" "}
-          {data.nonfarm_payrolls.date})
-        </li>
-        <li>
-          <strong>GDP Growth QoQ:</strong> {data.gdp_growth_qoq.value}% (as of{" "}
-          {data.gdp_growth_qoq.date})
-        </li>
+        {data.unemployment_rate && (
+          <li>
+            <strong>Unemployment Rate:</strong> {data.unemployment_rate.value}%
+            (as of {data.unemployment_rate.date})
+          </li>
+        )}
+        {data.nonfarm_payrolls && (
+          <li>
+            <strong>Nonfarm Payrolls:</strong>{" "}
+            {parseInt(data.nonfarm_payrolls.value).toLocaleString()} jobs (as of{" "}
+            {data.nonfarm_payrolls.date})
+          </li>
+        )}
+        {data.gdp_growth_qoq && (
+          <li>
+            <strong>GDP Growth QoQ:</strong> {data.gdp_growth_qoq.value}% (as of{" "}
+            {data.gdp_growth_qoq.date})
+          </li>
+        )}
+        {data.initial_jobless_claims && (
+          <li>
+            <strong>Initial Jobless Claims:</strong>{" "}
+            {parseInt(data.initial_jobless_claims.value).toLocaleString()} (as
+            of {data.initial_jobless_claims.date})
+          </li>
+        )}
+
+        {data.continuing_jobless_claims && (
+          <li>
+            <strong>Continuing Jobless Claims:</strong>{" "}
+            {parseInt(data.continuing_jobless_claims.value).toLocaleString()}{" "}
+            (as of {data.continuing_jobless_claims.date})
+          </li>
+        )}
       </ul>
+
+      <ContinuingClaimsChart />
     </section>
   );
 }

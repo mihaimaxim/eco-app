@@ -16,31 +16,41 @@ FRED_BASE="https://api.stlouisfed.org/fred/series/observations"
 app = Flask(__name__)
 CORS(app)
 
-def fetch_fred_series(series_id):
+def fetch_fred_series(series_id, limit=12):
     url = FRED_BASE
     params = {
         "api_key": FRED_API_KEY,
         "series_id": series_id,
         "file_type": "json",
         "sort_order": "desc",
-        "limit": 1,
+        "limit": limit,
     }
     response = requests.get(url, params=params)
     data = response.json()
-    obs = data["observations"][0]
-    return {
+    # obs = data["observations"][0]
+    return [{
         "value": obs["value"],
         "date": obs["date"]
     }
+            for obs in data["observations"]
+            if obs["value"] != "."]
     
 @app.route("/economy", methods=["GET"])
 def get_economy_data():
     data = {
         "unemployment_rate": fetch_fred_series("UNRATE"),
         "nonfarm_payrolls": fetch_fred_series("PAYEMS"),
-        "gdp_growth_qoq": fetch_fred_series("A191RL1Q225SBEA")
+        "gdp_growth_qoq": fetch_fred_series("A191RL1Q225SBEA"),
+        "initial_jobless_claims": fetch_fred_series("ICSA"),
+        "continuing_jobless_claims": fetch_fred_series("CCSA")
     }
     return jsonify(data)
+
+@app.route("/continuing-claims-trend", methods=["GET"])
+def continuing_claims_trend():
+    data = fetch_fred_series("CCSA", limit=52)
+    return jsonify(data)
+
 
 def get_video_id(youtube_url):
     parsed = urlparse(youtube_url)
