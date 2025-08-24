@@ -44,6 +44,7 @@ def get_economy_data():
         "initial_jobless_claims": fetch_fred_series("ICSA"),
         "continuing_jobless_claims": fetch_fred_series("CCSA")
     }
+    
     return jsonify(data)
 
 @app.route("/unemployment-trend",methods=["GET"])

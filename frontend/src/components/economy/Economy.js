@@ -28,36 +28,37 @@ function EconomySection() {
       <ul>
         {data.unemployment_rate && (
           <li>
-            <strong>Unemployment Rate:</strong> {data.unemployment_rate.value}%
-            (as of {data.unemployment_rate.date})
+            <strong>Unemployment Rate:</strong>{" "}
+            {data.unemployment_rate[0].value}% (as of{" "}
+            {data.unemployment_rate[0].date})
           </li>
         )}
         {data.nonfarm_payrolls && (
           <li>
-            <strong>Nonfarm Payrolls:</strong>{" "}
-            {parseInt(data.nonfarm_payrolls.value).toLocaleString()} jobs (as of{" "}
-            {data.nonfarm_payrolls.date})
+            <strong>Nonfarm Payrolls Total:</strong>{" "}
+            {data.nonfarm_payrolls[0].value.toLocaleString()} jobs (as of{" "}
+            {data.nonfarm_payrolls[0].date})
           </li>
         )}
         {data.gdp_growth_qoq && (
           <li>
-            <strong>GDP Growth QoQ:</strong> {data.gdp_growth_qoq.value}% (as of{" "}
-            {data.gdp_growth_qoq.date})
+            <strong>GDP Growth QoQ:</strong> {data.gdp_growth_qoq[0].value}% (as
+            of {data.gdp_growth_qoq[0].date})
           </li>
         )}
         {data.initial_jobless_claims && (
           <li>
             <strong>Initial Jobless Claims:</strong>{" "}
-            {parseInt(data.initial_jobless_claims.value).toLocaleString()} (as
-            of {data.initial_jobless_claims.date})
+            {parseInt(data.initial_jobless_claims[0].value).toLocaleString()}{" "}
+            (as of {data.initial_jobless_claims[0].date})
           </li>
         )}
 
         {data.continuing_jobless_claims && (
           <li>
             <strong>Continuing Jobless Claims:</strong>{" "}
-            {parseInt(data.continuing_jobless_claims.value).toLocaleString()}{" "}
-            (as of {data.continuing_jobless_claims.date})
+            {parseInt(data.continuing_jobless_claims[0].value).toLocaleString()}{" "}
+            (as of {data.continuing_jobless_claims[0].date})
           </li>
         )}
       </ul>
