@@ -79,6 +79,11 @@ def nonfarm_payrolls_change():
         {"date": d.strftime("%Y-%m-%d"), "value": float(v)}
         for d, v in zip(out["date"], out["change"])
     ])
+    
+@app.route("/initial-jobless-claims", methods=["GET"])    
+def initial_jobless_claims():
+    data = fetch_fred_series("ICSA", limit=52)
+    return jsonify(data)
 
 
 @app.route("/continuing-claims-trend", methods=["GET"])

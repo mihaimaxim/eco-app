@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ContinuingClaimsChart from "./continuing-jobless-claims/ContinuingJoblessClaims";
 import UnemploymentChart from "./unemployment/UnemploymentChart.js";
 import NonfarmPayrolls from "./nonfarm/NonfarmPayrolls.js";
+import InitialJoblessClaimChart from "./initial-jobless-claims/InitialJoblessClaims.js";
 
 function EconomySection() {
   const [data, setData] = useState(null);
@@ -62,6 +63,7 @@ function EconomySection() {
       </ul>
       <UnemploymentChart />
       <NonfarmPayrolls />
+      <InitialJoblessClaimChart />
       <ContinuingClaimsChart />
     </section>
   );
